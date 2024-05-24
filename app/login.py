@@ -1,4 +1,5 @@
 import tkinter as tk
+from scripts.create_DB import CreateDataBase
 
 
 class Login(tk.Tk):
@@ -35,7 +36,7 @@ class Login(tk.Tk):
         entry_for_login = tk.Entry(self, font=("Arial", 16))
         label_for_password = tk.Label(self, text="Пароль: ", font=("Arial", 22))
         entry_for_password = tk.Entry(self, show="*", font=("Arial", 16))
-        button_login = tk.Button(self, text="Войти")
+        button_login = tk.Button(self, text="Войти", command=self.get_role)
 
         logo_label.pack(pady=30)
 
@@ -46,3 +47,23 @@ class Login(tk.Tk):
         entry_for_password.pack()
 
         button_login.pack(pady=15)
+
+    def get_role(self):
+        """
+        Функция для получения роли
+        """
+
+        db = CreateDataBase()
+        cursor = db.get_cursor()
+
+        cursor.execute(
+            """
+
+            SELECT * FROM employees;
+
+        """
+        )
+
+        text = cursor.fetchall()
+
+        print(text)

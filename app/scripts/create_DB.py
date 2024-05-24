@@ -14,6 +14,16 @@ class CreateDataBase:
         # Вызываем функцию, которая создает базу данных
         self.__create_db()
 
+    def get_cursor(self):
+        """
+        Получаем cursor для работы с нашей базой данных
+        """
+
+        connection = sq.connect("../DataBase.db")
+        cursor = connection.cursor()
+
+        return cursor
+
     def __create_db(self) -> None:
         """
         Функция для создания базы данных
@@ -21,7 +31,7 @@ class CreateDataBase:
 
         # Пробуем подключиться(или создать) к базе данных
         try:
-            self.connection = sq.connect("DataBase.db")
+            self.connection = sq.connect("../DataBase.db")
             self.cursor = self.connection.cursor()
 
         # Если что-то пошло не так, выведется ошибка
@@ -41,7 +51,7 @@ class CreateDataBase:
         self.cursor.execute(
             """
 
-            INSERT INTO employees (name, second_name, surname, login, password, age, date_birth, status_vacation, status_retirement, status_pre_retirement, status_childless, status_many_children, status_veteran)
+            INSERT OR IGNORE INTO employees (name, second_name, surname, login, password, age, date_birth, status_vacation, status_retirement, status_pre_retirement, status_childless, status_many_children, status_veteran)
             VALUES ('David', 'Gabriel', 'Davis', 'admin', '1234', 21, '01.01.2003', 0, 0, 0, 0, 0, 0)
 
         """
