@@ -14,8 +14,8 @@ class MainApp:
         Основной метод для добавления разных модулей
         """
 
-        login = Login()
-        role: str = login.get_role()
+        self.login = Login()
+        role: str = self.login.get_role()
         
         if role is not None:
             self.__redirect_to_page(role)
@@ -28,16 +28,19 @@ class MainApp:
         if role == 'admin':
             print(f"Ваша роль: {role}")
             # Перенаправить на страницу с ролью admin
+            self.login.destroy()
             pass
 
         elif role == 'teacher':
             print(f"Ваша роль: {role}")
             # Перенаправить на страницу с ролью teacher
+            self.login.destroy()
             pass
 
         elif role == 'staff':
             print(f"Ваша роль: {role}")
             # Перенаправить на страницу с ролью staff
+            self.login.destroy()
             pass
 
 
