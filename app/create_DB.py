@@ -49,15 +49,17 @@ class CreateDataBase:
         Функция для добавления супер пользователя
         """
 
+        # Добавляем супер пользователя в нашу базу данных
         self.cursor.execute(
             """
 
-            INSERT OR IGNORE INTO employees (name, second_name, surname, login, password, age, date_birth, status_vacation, status_retirement, status_pre_retirement, status_childless, status_many_children, status_veteran)
-            VALUES ('David', 'Gabriel', 'Davis', 'admin', '1234', 21, '01.01.2003', 0, 0, 0, 0, 0, 0)
+            INSERT OR IGNORE INTO employees (name, second_name, surname, login, password, role, age, date_birth, status_vacation, status_retirement, status_pre_retirement, status_childless, status_many_children, status_veteran)
+            VALUES ('David', 'Gabriel', 'Davis', 'admin', '1234', 'admin', 21, '01.01.2003', 0, 0, 0, 0, 0, 0)
 
         """
         )
 
+        # Сохраняем изменения
         self.connection.commit()
 
     def __create_tables(self) -> None:
@@ -102,6 +104,7 @@ class CreateDataBase:
                                     surname TEXT NOT NULL,
                                     login TEXT NOT NULL UNIQUE,
                                     password TEXT NOT NULL,
+                                    role TEXT NOT NULL,
                                     age INTEGER NOT NULL,
                                     date_birth TEXT NOT NULL,
                                     status_vacation BOOLEAN NOT NULL,

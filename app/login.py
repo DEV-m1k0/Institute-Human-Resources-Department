@@ -1,5 +1,6 @@
 import tkinter as tk
-from scripts.create_DB import CreateDataBase
+from create_DB import CreateDataBase
+import time
 
 
 class Login(tk.Tk):
@@ -31,39 +32,68 @@ class Login(tk.Tk):
         Функция для добавления виджетов на экран
         """
 
+        # Создаем виджеты
         logo_label = tk.Label(self, text="Вход", font=("Arial", 50))
         label_for_login = tk.Label(self, text="Логин: ", font=("Arial", 22))
-        entry_for_login = tk.Entry(self, font=("Arial", 16))
+        self.entry_for_login = tk.Entry(self, font=("Arial", 16))
         label_for_password = tk.Label(self, text="Пароль: ", font=("Arial", 22))
-        entry_for_password = tk.Entry(self, show="*", font=("Arial", 16))
+        self.entry_for_password = tk.Entry(self, show="*", font=("Arial", 16))
         button_login = tk.Button(self, text="Войти", command=self.get_role)
 
+        # Размещаем их
         logo_label.pack(pady=30)
-
         label_for_login.pack()
-        entry_for_login.pack()
-
+        self.entry_for_login.pack()
         label_for_password.pack()
-        entry_for_password.pack()
-
+        self.entry_for_password.pack()
         button_login.pack(pady=15)
 
-    def get_role(self):
+    def __check_user(self) -> str:
         """
-        Функция для получения роли
+        Проверка на пользователя с введенными данными
         """
 
         db = CreateDataBase()
         cursor = db.get_cursor()
 
-        cursor.execute(
-            """
+        # Получаем данные с наших полей ввода
+        login: str = self.entry_for_login.get()
+        password: str = self.entry_for_password.get()
 
-            SELECT * FROM employees;
+        # Делаем выборку по введенным данным
+        try:
+            cursor.execute(
+                f"""
+                SELECT role FROM employees
+                WHERE password='{password}' AND login='{login}'
+                """
+            )
 
+            # Получаем роль пользователя
+            role: list[str] = list(cursor.fetchone())
+        
+        except Exception:
+            # Выводим надпись, что пользователь не найден
+            tk.Label(self, text='Пользователь не найден', fg='red').pack()
+
+            text_null1 = tk.StringVar(self, '')
+            text_null2 = tk.StringVar(self, '')
+
+            # Убираем текст из полей ввода
+            self.entry_for_login.configure(textvariable=text_null1)
+            self.entry_for_password.configure(textvariable=text_null2)
+
+        # Проверка на то, что мы ТОЧНО получили роль
+        if role is not None:
+            return role[0]
+
+    def get_role(self) -> str:
         """
-        )
+        Функция для получения роли
+        """
 
-        text = cursor.fetchall()
+        role: str = self.__check_user()
 
-        print(text)
+        if role is not None:
+            self.quit()
+            return role
