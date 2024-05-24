@@ -1,5 +1,5 @@
 from login import Login
-
+from admin_panel import Admin_panel
 
 class MainApp:
     """
@@ -26,10 +26,12 @@ class MainApp:
         Метод для перенаправления на страницы по роли
         """
         if role == 'admin':
-            print(f"Ваша роль: {role}")
             # Перенаправить на страницу с ролью admin
             self.login.destroy()
-            pass
+            Admin_panel()
+            
+            
+
 
         elif role == 'teacher':
             print(f"Ваша роль: {role}")
