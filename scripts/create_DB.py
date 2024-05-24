@@ -1,46 +1,64 @@
 import sqlite3 as sq
 
-class CreateDataBase():
-    '''
-        Этот класс предназначен для создания базы данных
-    '''
+
+class CreateDataBase:
+    """
+    Этот класс предназначен для создания базы данных
+    """
 
     def __init__(self) -> None:
-        '''
-            Конструктор класса CreateDataBase
-        '''
+        """
+        Конструктор класса CreateDataBase
+        """
 
         # Вызываем функцию, которая создает базу данных
-        self.__createDB()
+        self.__create_db()
 
-    def __createDB(self) -> None:
-        '''
-            Функция для создания базы данных
-        '''
-        
+    def __create_db(self) -> None:
+        """
+        Функция для создания базы данных
+        """
+
         # Пробуем подключиться(или создать) к базе данных
         try:
-            self.connection = sq.connect('DataBase.db')
+            self.connection = sq.connect("DataBase.db")
             self.cursor = self.connection.cursor()
-        
+
         # Если что-то пошло не так, выведется ошибка
         except sq.Error as error:
             print(error)
 
         # Если блок try не выдал исключений
         else:
-            self.__createTables()
+            self.__create_tables()
+            self.__create_super_user()
 
+    def __create_super_user(self) -> None:
+        """
+        Функция для добавления супер пользователя
+        """
 
-    def __createTables(self) -> None:
-        '''
-            Функция для создания таблиц в базе данных
-        '''
+        self.cursor.execute(
+            """
+
+            INSERT INTO employees (name, second_name, surname, login, password, age, date_birth, status_vacation, status_retirement, status_pre_retirement, status_childless, status_many_children, status_veteran)
+            VALUES ('David', 'Gabriel', 'Davis', 'admin', '1234', 21, '01.01.2003', 0, 0, 0, 0, 0, 0)
+
+        """
+        )
+
+        self.connection.commit()
+
+    def __create_tables(self) -> None:
+        """
+        Функция для создания таблиц в базе данных
+        """
 
         # Пробуем создать таблицы
         try:
             # Создаем таблицу с должностями
-            self.cursor.execute("""
+            self.cursor.execute(
+                """
 
                                 CREATE TABLE IF NOT EXISTS job_title(
                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -48,19 +66,23 @@ class CreateDataBase():
                                     salary INTEGER NOT NULL
                                 )
 
-                                """)
-            
-            self.cursor.execute("""
+                                """
+            )
+
+            self.cursor.execute(
+                """
 
                                 CREATE TABLE IF NOT EXISTS department(
                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                                     name TEXT NOT NULL
                                 )
 
-                                """)
-            
+                                """
+            )
+
             # Создаем таблицу с сотрудниками
-            self.cursor.execute("""
+            self.cursor.execute(
+                """
 
                                 CREATE TABLE IF NOT EXISTS employees(
                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -79,10 +101,12 @@ class CreateDataBase():
                                     status_veteran BOOLEAN NOT NULL
                                 )
 
-                                """)
-            
+                                """
+            )
+
             # Создаем таблицу с вакансиями
-            self.cursor.execute("""
+            self.cursor.execute(
+                """
 
                                 CREATE TABLE IF NOT EXISTS job_vacancy(
                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -95,10 +119,12 @@ class CreateDataBase():
                                     FOREIGN KEY (id_department) REFERENCES department (id) ON DELETE CASCADE
                                 )
                                 
-                                """)
-            
+                                """
+            )
+
             # Создаем таблицу с сотрудниками и их должностями
-            self.cursor.execute("""
+            self.cursor.execute(
+                """
 
                                 CREATE TABLE IF NOT EXISTS employees_and_positions(
                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -111,8 +137,9 @@ class CreateDataBase():
                                     FOREIGN KEY (id_department) REFERENCES department (id) ON DELETE CASCADE
                                 )
 
-                                """)
-            
+                                """
+            )
+
             # Сохраняем таблицы
             self.connection.commit()
 
@@ -121,14 +148,14 @@ class CreateDataBase():
             print(error)
 
     def __del__(self) -> None:
-        '''
-            Деструктор класса CreateDataBase.\n
-            Отрабатывает тогда, когда данный класс удаляется из кэша сборщиком мусора
-        '''
+        """
+        Деструктор класса CreateDataBase.\n
+        Отрабатывает тогда, когда данный класс удаляется из кэша сборщиком мусора
+        """
 
         # Закрываем все подключения
         self.connection.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     CreateDataBase()
