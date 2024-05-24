@@ -19,7 +19,7 @@ class CreateDataBase:
         Получаем cursor для работы с нашей базой данных
         """
 
-        connection = sq.connect("../DataBase.db")
+        connection = sq.connect("DataBase.db")
         cursor = connection.cursor()
 
         return cursor
@@ -31,7 +31,7 @@ class CreateDataBase:
 
         # Пробуем подключиться(или создать) к базе данных
         try:
-            self.connection = sq.connect("../DataBase.db")
+            self.connection = sq.connect("DataBase.db")
             self.cursor = self.connection.cursor()
 
         # Если что-то пошло не так, выведется ошибка
