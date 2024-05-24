@@ -19,6 +19,7 @@ class CreateDataBase:
         Получаем cursor для работы с нашей базой данных
         """
 
+        self.__create_db()
         connection = sq.connect("DataBase.db")
         cursor = connection.cursor()
 

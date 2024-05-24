@@ -6,6 +6,7 @@ __pycache__/
 # C extensions
 *.so
 
+.venv
 DataBase.db
 
 # Distribution / packaging
