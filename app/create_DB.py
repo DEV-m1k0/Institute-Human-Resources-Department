@@ -14,7 +14,7 @@ class CreateDataBase:
         # Вызываем функцию, которая создает базу данных
         self.__create_db()
 
-    def get_cursor(self):
+    def get_cursor(self) -> sq.Cursor:
         """
         Получаем cursor для работы с нашей базой данных
         """
@@ -54,7 +54,7 @@ class CreateDataBase:
             """
 
             INSERT OR IGNORE INTO employees (name, second_name, surname, login, password, role, age, date_birth, status_vacation, status_retirement, status_pre_retirement, status_childless, status_many_children, status_veteran)
-            VALUES ('David', 'Gabriel', 'Davis', 'admin', '1234', 'admin', 21, '01.01.2003', 0, 0, 0, 0, 0, 0)
+            VALUES ('David', 'Gabriel', 'Davis', 'admin', '1234', 'admin', 21, '01.01.2003', 'нет', 'нет', 'нет', 'нет', 'нет', 'нет')
 
         """
         )
@@ -107,12 +107,12 @@ class CreateDataBase:
                                     role TEXT NOT NULL,
                                     age INTEGER NOT NULL,
                                     date_birth TEXT NOT NULL,
-                                    status_vacation BOOLEAN NOT NULL,
-                                    status_retirement BOOLEAN NOT NULL,
-                                    status_pre_retirement BOOLEAN NOT NULL,
-                                    status_childless BOOLEAN NOT NULL,
-                                    status_many_children BOOLEAN NOT NULL,
-                                    status_veteran BOOLEAN NOT NULL
+                                    status_vacation TEXT NOT NULL,
+                                    status_retirement TEXT NOT NULL,
+                                    status_pre_retirement TEXT NOT NULL,
+                                    status_childless TEXT NOT NULL,
+                                    status_many_children TEXT NOT NULL,
+                                    status_veteran TEXT NOT NULL
                                 )
 
                                 """
