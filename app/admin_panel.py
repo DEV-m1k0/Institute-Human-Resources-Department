@@ -37,16 +37,15 @@ class Admin_panel(tk.Tk):
         """
         Функция для открытия окна для просмотра всех записей
         """
-        print('tbd')
-        # self.destroy()
-        # Check_all_tables()
+        self.destroy()
+        Check_all_tables()
+
         
     
     def __register_user(self):
         """
         Функция для открытия окна для регистрации новых пользователей
         """
-        
         print('tbd')
     
     def __edit_users_data(self):
