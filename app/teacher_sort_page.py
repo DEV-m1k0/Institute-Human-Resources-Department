@@ -93,6 +93,10 @@ class TeacherAllNotes(Tk):
 
     def __set_value(self, event) -> None:
         note = self.sorting.get()
-        self.accepted_notes = uf.sorting_users_by_status_pre_retirment(note)
-        self.__printing_notes()
+        if note == "Сортировка сотрудников":
+            pass
+
+        else:
+            self.accepted_notes = uf.sorting_users_by_status_pre_retirment(note)
+            self.__printing_notes()
             

@@ -29,19 +29,19 @@ class MainApp:
             print(f"Ваша роль: {role}")
             # Перенаправить на страницу с ролью admin
             self.login.destroy()
-            pass
+            
 
         elif role == 'teacher':
             print(f"Ваша роль: {role}")
             # Перенаправить на страницу с ролью teacher
             self.login.destroy()
-            pass
+            
 
         elif role == 'staff':
             print(f"Ваша роль: {role}")
             # Перенаправить на страницу с ролью staff
             self.login.destroy()
-            pass
+            
 
 
 if __name__ == "__main__":
