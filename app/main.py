@@ -30,8 +30,6 @@ class MainApp:
             self.login.destroy()
             Admin_panel()
             
-            
-
 
         elif role == 'teacher':
             print(f"Ваша роль: {role}")

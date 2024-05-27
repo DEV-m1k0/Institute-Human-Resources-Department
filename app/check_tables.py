@@ -61,8 +61,4 @@ class Check_all_tables(tk.Tk):
                        """)
         for el in cursor.fetchall():
             self.tables_data_listbox.insert(0, el)
-        
-        
-        
-Check_all_tables()     
 
