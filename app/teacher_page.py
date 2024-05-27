@@ -37,6 +37,3 @@ class TeacherPanel(Tk):
 
         self.destroy()
         TeacherAllNotes()
-
-
-TeacherPanel()
