@@ -75,23 +75,53 @@ class CreateDataBase:
 
                                 CREATE TABLE IF NOT EXISTS job_title(
                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                    name TEXT NOT NULL,
+                                    name TEXT NOT NULL UNIQUE,
                                     salary INTEGER NOT NULL
                                 )
 
                                 """
             )
 
+            self.cursor.execute("""
+                                INSERT OR IGNORE INTO job_title (name, salary)
+                                VALUES ('Преродаватель', 30000);
+                                """)
+            
+            self.cursor.execute("""
+                                INSERT OR IGNORE INTO job_title (name, salary)
+                                VALUES ('Уборщик', 20000);
+                                """)
+            
+            self.cursor.execute("""
+                                INSERT OR IGNORE INTO job_title (name, salary)
+                                VALUES ('Системный администратор', 30000);
+                                """)
+            
+            self.cursor.execute("""
+                                INSERT OR IGNORE INTO job_title (name, salary)
+                                VALUES ('Администрация', 100000);
+                                """)
+
             self.cursor.execute(
                 """
 
                                 CREATE TABLE IF NOT EXISTS department(
                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                    name TEXT NOT NULL
+                                    name TEXT NOT NULL UNIQUE
                                 )
 
                                 """
             )
+
+            self.cursor.execute("""
+                                INSERT OR IGNORE INTO department (name)
+                                VALUES ('гумунитарный');
+                                """)
+            
+            self.cursor.execute("""
+                                INSERT OR IGNORE INTO department (name)
+                                VALUES ('технический');
+                                """)
 
             # Создаем таблицу с сотрудниками
             self.cursor.execute(
