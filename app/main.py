@@ -1,5 +1,7 @@
 from login import Login
 from admin_panel import Admin_panel
+from teacher_page import TeacherPanel
+from staff_page import StaffPanel
 
 class MainApp:
     """
@@ -15,7 +17,7 @@ class MainApp:
         """
 
         self.login = Login()
-        role: str = self.login.get_role()
+        role = self.login.get_role()
         
         if role is not None:
             self.__redirect_to_page(role)
@@ -31,14 +33,14 @@ class MainApp:
             Admin_panel()           
 
         elif role == 'teacher':
-            print(f"Ваша роль: {role}")
             # Перенаправить на страницу с ролью teacher
             self.login.destroy()
+            TeacherPanel()
 
 
         elif role == 'staff':
-            print(f"Ваша роль: {role}")
             # Перенаправить на страницу с ролью staff
+            StaffPanel()
             self.login.destroy()
 
 

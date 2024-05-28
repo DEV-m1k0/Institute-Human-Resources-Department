@@ -1,8 +1,7 @@
 import tkinter as tk
 from create_DB import CreateDataBase
-import time
 
-
+department = ''
 class Login(tk.Tk):
     """
     Класс для страницы со входом в систему
@@ -22,9 +21,12 @@ class Login(tk.Tk):
         self.geometry("370x420")
         self.title("Login")
         self.resizable(height=False, width=False)
+        
+        db = CreateDataBase()
+        self.cursor = db.get_cursor()
 
         self.__add_widgets()
-
+     
         self.mainloop()
 
     def __add_widgets(self):
@@ -52,25 +54,25 @@ class Login(tk.Tk):
         """
         Проверка на пользователя с введенными данными
         """
-
-        db = CreateDataBase()
-        cursor = db.get_cursor()
-
+        
         # Получаем данные с наших полей ввода
-        login: str = self.entry_for_login.get()
-        password: str = self.entry_for_password.get()
+        self.login: str = self.entry_for_login.get()
+        self.password: str = self.entry_for_password.get()
+
 
         # Делаем выборку по введенным данным
         try:
-            cursor.execute(
+            self.cursor.execute(
                 f"""
                 SELECT role FROM employees
-                WHERE password='{password}' AND login='{login}'
+                WHERE password='{self.password}' AND login='{self.login}'
                 """
             )
 
             # Получаем роль пользователя
-            role: list[str] = list(cursor.fetchone())
+            role: list[str] = list(self.cursor.fetchone())
+            
+            
         
         except Exception:
             # Выводим надпись, что пользователь не найден
@@ -91,9 +93,8 @@ class Login(tk.Tk):
         """
         Функция для получения роли
         """
-
         role: str = self.__check_user()
-
         if role is not None:
             self.quit()
             return role
+    

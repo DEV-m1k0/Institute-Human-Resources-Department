@@ -46,7 +46,10 @@ class Admin_panel(tk.Tk):
         """
         Функция для открытия окна для регистрации новых пользователей
         """
-        print('tbd')
+        from reg_user import RegistrationUsers
+        RegistrationUsers()
+        
+        self.destroy()
     
     def __edit_users_data(self):
         """

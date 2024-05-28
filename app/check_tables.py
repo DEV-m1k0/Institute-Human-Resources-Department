@@ -10,12 +10,12 @@ class Check_all_tables(tk.Tk):
     def __init__(self, screenName: str | None = None, baseName: str | None = None, className: str = "Tk", useTk: bool = True, sync: bool = False, use: str | None = None) -> None:
         super().__init__(screenName, baseName, className, useTk, sync, use)
         
-        self.geometry("1280x500")
+        self.geometry("1280x400")
         self.title("Tables")
         self.resizable(height=False, width=False)
         
         # Словарь для комбобокса с фильтрациями
-        self.sort_names = {'В отпуске' : 'status_vacation', 'Пенсионер':'status_retirement', 'Предпенсионного возраста':'status_pre_retirement', 'Бездетный':'status_childless',
+        self.sort_names = {"Все" : "Все", 'В отпуске' : 'status_vacation', 'Пенсионер':'status_retirement', 'Предпенсионного возраста':'status_pre_retirement', 'Бездетный':'status_childless',
                            'Многодетный':'status_many_children', 'Ветеран':'status_veteran'}
         
         self.__add_widgets()
@@ -42,7 +42,7 @@ class Check_all_tables(tk.Tk):
         self.sort_optionmenu = ttk.OptionMenu(self, self.sort_var, 'Выберите вид сортировки', *self.sort_names)
         self.sort_optionmenu['state'] = 'disabled'
         
-        back_btn = tk.Button(self, text='К панели администратора', command=self.__back_to_panel)
+        back_btn = tk.Button(self, text='К панели администратора', command=self.__back_to_panel, height=2)
  
         # Размещаем их
         tables_label.pack()
@@ -128,8 +128,8 @@ class Check_all_tables(tk.Tk):
             self.tables_data_view.heading(f'#{1+columns.index(i)}', text=i)
                 
         self.tables_data_view.column("#1", width=40, stretch='NO')
-            
-        queue = f"""
+        if self.sort_names[self.sort_var.get()] == 'Все':
+            queue = """
                        SELECT employees_and_positions.id, job_title.name,department.name, employees.name, employees.second_name, employees.surname,
                         employees.login, employees.password, employees.role, employees.age, employees.date_birth, 
                         employees.status_vacation, employees.status_retirement, employees.status_pre_retirement, 
@@ -138,8 +138,19 @@ class Check_all_tables(tk.Tk):
                        inner join job_title on employees_and_positions.id_job_title = job_title.id
                        inner join department on department.id = employees_and_positions.id_department
                        inner join employees on employees_and_positions.id_employee = employees.id
-                       where {self.sort_names[self.sort_var.get()]} = "да"
-                       order by employees_and_positions.id desc        
+
+                       """
+        else:
+            queue = f"""
+                       SELECT employees_and_positions.id, job_title.name,department.name, employees.name, employees.second_name, employees.surname,
+                        employees.login, employees.password, employees.role, employees.age, employees.date_birth, 
+                        employees.status_vacation, employees.status_retirement, employees.status_pre_retirement, 
+                        employees.status_childless, employees.status_many_children, employees.status_veteran
+                       FROM employees_and_positions
+                       inner join job_title on employees_and_positions.id_job_title = job_title.id
+                       inner join department on department.id = employees_and_positions.id_department
+                       inner join employees on employees_and_positions.id_employee = employees.id
+                       where {self.sort_names[self.sort_var.get()]} = "да"    
                        """
         self.cursor.execute(queue)
         for el in self.cursor.fetchall():
@@ -154,4 +165,3 @@ class Check_all_tables(tk.Tk):
         from admin_panel import Admin_panel
         Admin_panel()
         
-
