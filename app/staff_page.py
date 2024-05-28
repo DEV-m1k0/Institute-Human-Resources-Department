@@ -8,12 +8,13 @@ class StaffPanel(Tk):
     Панель персонала
     """
 
-    def __init__(self, screenName: str | None = None, baseName: str | None = None, className: str = "Tk", useTk: bool = True, sync: bool = False, use: str | None = None) -> None:
+    def __init__(self, department, screenName: str | None = None, baseName: str | None = None, className: str = "Tk", useTk: bool = True, sync: bool = False, use: str | None = None) -> None:
         super().__init__(screenName, baseName, className, useTk, sync, use)
 
         self.geometry('450x350')
         self.title('Staff\'s panel')
 
+        self.department = department
         
         self.__add_widgets()
 
@@ -33,8 +34,11 @@ class StaffPanel(Tk):
 
     def __redirect_to_all_notes(self):
         """
-        Переадресация на страицу с записями о сотрудниках
+        Переадресация на страницу с записями о сотрудниках
         """
+        
         self.destroy()
+        StaffAllNotes(self.department)
+        
 
 

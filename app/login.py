@@ -58,6 +58,7 @@ class Login(tk.Tk):
         # Получаем данные с наших полей ввода
         self.login: str = self.entry_for_login.get()
         self.password: str = self.entry_for_password.get()
+        self.get_department()
 
 
         # Делаем выборку по введенным данным
@@ -96,5 +97,16 @@ class Login(tk.Tk):
         role: str = self.__check_user()
         if role is not None:
             self.quit()
-            return role
+            return role, department
+
+    def get_department(self):
+        self.cursor.execute(
+                f"""
+                SELECT employees_and_positions.id_department FROM employees_and_positions
+                inner join employees on employees_and_positions.id_employee = employees.id
+                WHERE employees.password='{self.password}' AND employees.login='{self.login}'
+                """)
+        global department
+        department = self.cursor.fetchone()
+
     

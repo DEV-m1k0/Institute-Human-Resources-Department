@@ -17,7 +17,7 @@ class MainApp:
         """
 
         self.login = Login()
-        role = self.login.get_role()
+        role, self.department= self.login.get_role()
         
         if role is not None:
             self.__redirect_to_page(role)
@@ -35,13 +35,14 @@ class MainApp:
         elif role == 'teacher':
             # Перенаправить на страницу с ролью teacher
             self.login.destroy()
-            TeacherPanel()
+            TeacherPanel(*self.department)
 
 
         elif role == 'staff':
             # Перенаправить на страницу с ролью staff
-            StaffPanel()
             self.login.destroy()
+            StaffPanel(*self.department)
+
 
 
 
