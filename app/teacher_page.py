@@ -13,7 +13,8 @@ class TeacherPanel(Tk):
 
         self.geometry('450x350')
         self.title('Teacher\'s panel')
-
+        self.resizable(height=False, width=False)
+        
         self.department = department
         
         self.__add_widgets()
