@@ -3,7 +3,7 @@ from tkinter import ttk
 from create_DB import CreateDataBase
 
 
-class TeacherAllNotes(tk.Tk):
+class StaffAllNotes(tk.Tk):
     """
     Страница с записями\n
     \nВозможности сортировки:
@@ -13,13 +13,15 @@ class TeacherAllNotes(tk.Tk):
     4) Многодетные сотрудники\n
     5) Ветераны
 """
+
     def __init__(self, department, screenName: str | None = None, baseName: str | None = None, className: str = "Tk", useTk: bool = True, sync: bool = False, use: str | None = None) -> None:
         super().__init__(screenName, baseName, className, useTk, sync, use)
 
-        self.department = department
         self.geometry("650x300")
         self.title('Notes')
         self.resizable(height=False, width=False)
+        
+        self.department = department       
         
         self.sort_names = {"Все" : "Все", 'В отпуске' : 'status_vacation', 'Пенсионер':'status_retirement', 'Предпенсионного возраста':'status_pre_retirement', 'Бездетный':'status_childless',
                            'Многодетный':'status_many_children', 'Ветеран':'status_veteran'}
@@ -28,6 +30,8 @@ class TeacherAllNotes(tk.Tk):
         self.__add_widgets()
         self.__fill()
 
+
+       
         self.mainloop()
 
 
@@ -35,11 +39,12 @@ class TeacherAllNotes(tk.Tk):
         """
         Добавление и размещение виджетов
         """
+
         # Создаем виджеты
         self.sort_var = tk.StringVar(self)
         self.sort_var.trace('w', self.__sort)
         self.sort_optionmenu =  ttk.OptionMenu(self, self.sort_var, 'Выбирите сортировку', *self.sort_names)
-        back_button = tk.Button(self, text='К панели преподавателя', command=self.__back_to_panel)
+        back_button = tk.Button(self, text='К панели персонала', command=self.__back_to_panel)
         self.tables_data_view = ttk.Treeview(self, show='headings')
 
         # Размещаем их
@@ -112,5 +117,6 @@ class TeacherAllNotes(tk.Tk):
         """
         self.destroy()
         
-        from teacher_page import TeacherPanel
-        TeacherPanel(self.department)
+        from staff_page import StaffPanel
+        StaffPanel(self.department)
+
