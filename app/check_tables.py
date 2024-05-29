@@ -21,6 +21,15 @@ class Check_all_tables(tk.Tk):
         self.__add_widgets()
         
         self.mainloop()        
+
+    def item_selected(self, value):
+
+        selected_position = self.tables_data_view.selection()[0]
+        selected_value = self.tables_data_view.item(selected_position, 'values')
+
+        from editing_entries import EditEntrie
+        EditEntrie(selected_value)
+
     
     def __add_widgets(self):
         """
@@ -37,6 +46,8 @@ class Check_all_tables(tk.Tk):
         self.tables_name_optionmenu =  ttk.OptionMenu(self, self.tables_name_var, 'Выберите таблицу', *('Вакансии','Сотрудники'))
         
         self.tables_data_view = ttk.Treeview(self, show='headings')
+
+        self.tables_data_view.bind('<<TreeviewSelect>>', self.item_selected)
         
 
         self.sort_optionmenu = ttk.OptionMenu(self, self.sort_var, 'Выберите вид сортировки', *self.sort_names)
@@ -166,4 +177,3 @@ class Check_all_tables(tk.Tk):
         
         from admin_panel import Admin_panel
         Admin_panel()
-        

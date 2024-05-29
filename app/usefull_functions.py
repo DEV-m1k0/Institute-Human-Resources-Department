@@ -19,7 +19,6 @@ def sorting_users_by_status_pre_retirment(sort_by: str, notes: list[tuple] = Non
         notes = get_all_users()
 
     for user in notes:
-
         note = {
             'Предпенсионный возраст': user[11],
             'Бездетные': user[12],
@@ -31,3 +30,39 @@ def sorting_users_by_status_pre_retirment(sort_by: str, notes: list[tuple] = Non
             accepted_users.append(user)
 
     return accepted_users
+
+def get_notes_for_department() -> list[str]:
+    db = CreateDataBase()
+    cursor = db.get_cursor()
+
+    cursor.execute("""
+                    SELECT * FROM department;
+                    """)
+    
+    departmens = []
+
+    for row in cursor.fetchall():
+        departmens.append(row[1])
+
+    return departmens
+
+def get_notes_for_job_title() -> list[str]:
+    db = CreateDataBase()
+    cursor = db.get_cursor()
+
+    cursor.execute("""
+                    SELECT * FROM job_title;
+                    """)
+    
+    departmens = []
+
+    for row in cursor.fetchall():
+        departmens.append(row[1])
+
+    return departmens
+
+
+CHOICES_FOR_STATUS = ['да', 'нет']
+CHOICES_FOR_ROLE = ['Администрация', 'Преподаватель', 'Технический персонал']
+DEPARTMENTS: list[str] = get_notes_for_department()
+JOB_TITLE = get_notes_for_job_title()

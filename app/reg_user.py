@@ -123,43 +123,12 @@ class RegistrationUsers(Tk):
             ttk.Label(frame, text=name_label).grid(row=count, column=0)
             count += 1
 
-    def get_notes_for_department(self) -> list[str]:
-        db = CreateDataBase()
-        cursor = db.get_cursor()
-
-        cursor.execute("""
-                        SELECT * FROM department;
-                       """)
-        
-        departmens = []
-
-        for row in cursor.fetchall():
-            departmens.append(row[1])
-
-        return departmens
-    
-    def get_notes_for_job_title(self) -> list[str]:
-        db = CreateDataBase()
-        cursor = db.get_cursor()
-
-        cursor.execute("""
-                        SELECT * FROM job_title;
-                       """)
-        
-        departmens = []
-
-        for row in cursor.fetchall():
-            departmens.append(row[1])
-
-        return departmens
-
     def __entry_pack(self, frame: ttk.Frame) -> None:
         """
         Функция для размещения на странице entry
         """
 
-        CHOICES_FOR_STATUS = ['да', 'нет']
-        CHOICES_FOR_ROLE = ['Администрация', 'Преподаватель', 'Технический персонал']
+        from usefull_functions import DEPARTMENTS, JOB_TITLE, CHOICES_FOR_ROLE, CHOICES_FOR_STATUS
 
         self.entry_name: ttk.Entry = ttk.Entry(frame)
         self.entry_name.grid(row=0, column=1)
@@ -173,13 +142,11 @@ class RegistrationUsers(Tk):
         self.entry_age: ttk.Entry = ttk.Entry(frame)
         self.entry_age.grid(row=3, column=1)
 
-        DEPARTMENTS: list[str] = self.get_notes_for_department()
-
         self.stringVar_department = tk.StringVar(frame)
         entry_department = ttk.OptionMenu(frame, self.stringVar_department, DEPARTMENTS[0], *DEPARTMENTS)
         entry_department.grid(row=4, column=1)
 
-        JOB_TITLE = self.get_notes_for_job_title()
+        
 
         self.stringVar_job_title = tk.StringVar(frame)
         entry_job_title = ttk.OptionMenu(frame, self.stringVar_job_title, JOB_TITLE[0], *JOB_TITLE)
