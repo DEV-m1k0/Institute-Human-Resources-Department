@@ -152,8 +152,8 @@ class CreateDataBase:
 
                                 CREATE TABLE IF NOT EXISTS job_vacancy(
                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                    id_job_title TEXT NOT NULL,
-                                    id_department INTEGER,
+                                    id_job_title INTEGER NOT NULL,
+                                    id_department INTEGER NOT NULL,
                                     vacancy_opening_date TEXT NOT NULL,
                                     vacancy_closing_date TEXT,
 
@@ -166,8 +166,7 @@ class CreateDataBase:
 
             self.cursor.execute("""
                                 INSERT OR IGNORE INTO job_vacancy(id_job_title, id_department, vacancy_opening_date, vacancy_closing_date)
-                                VALUES (1, 1, "18.08.2023", NULL),
-                                       (2, 1, "07.01.2024", NULL),
+                                VALUES (2, 1, "07.01.2024", NULL),
                                        (1, 2, "07.01.2024", "01.01.2025"),
                                        (4, 2, "01.01.2024", NULL),
                                        (3, 1, "05.03.2024", "01.01.2026");

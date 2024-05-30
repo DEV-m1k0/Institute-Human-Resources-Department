@@ -25,6 +25,9 @@ class RegistrationUsers(Tk):
         frame = ttk.Frame(self)
         frame.pack(pady=20)
 
+        self.complete_label = tk.Label(self, fg='Green')
+        self.complete_label.pack()
+
         self.__label_pack(frame)
         self.__entry_pack(frame)
 
@@ -97,6 +100,7 @@ class RegistrationUsers(Tk):
                         "{self.stringVar_pre_retiremen.get()}", "{self.stringVar_childless.get()}",
                         "{self.stringVar_many_children.get()}", "{self.stringVar_veteran.get()}")
                        """)
+        self.complete_label['text'] = 'Пользовтаель успешно добавлен.'
 
     def __back(self):
 

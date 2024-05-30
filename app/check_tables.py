@@ -22,7 +22,7 @@ class Check_all_tables(tk.Tk):
         
         self.mainloop()        
 
-    def item_selected(self, value):
+    def item_selected_employees(self, value):
 
         selected_position = self.tables_data_view.selection()[0]
         selected_value = self.tables_data_view.item(selected_position, 'values')
@@ -30,7 +30,16 @@ class Check_all_tables(tk.Tk):
         from editing_entries import EditEntrie
         EditEntrie(selected_value)
 
-    
+    def item_selected_vacany(self, value):
+
+        selected_position = self.tables_data_view.selection()[0]
+        selected_value = self.tables_data_view.item(selected_position, 'values')
+        
+        from edit_vacancy import EditVacancy
+        EditVacancy(selected_value)
+        
+
+
     def __add_widgets(self):
         """
         Функция для добавления виджетов на экран
@@ -46,10 +55,7 @@ class Check_all_tables(tk.Tk):
         self.tables_name_optionmenu =  ttk.OptionMenu(self, self.tables_name_var, 'Выберите таблицу', *('Вакансии','Сотрудники'))
         
         self.tables_data_view = ttk.Treeview(self, show='headings')
-
-        self.tables_data_view.bind('<<TreeviewSelect>>', self.item_selected)
         
-
         self.sort_optionmenu = ttk.OptionMenu(self, self.sort_var, 'Выберите вид сортировки', *self.sort_names)
         self.sort_optionmenu['state'] = 'disabled'
         
@@ -76,12 +82,14 @@ class Check_all_tables(tk.Tk):
         
         # Проверка выбора таблицы
         if self.tables_name_var.get() == "Вакансии":
+
+            self.tables_data_view.bind('<<TreeviewSelect>>', self.item_selected_vacany)
             
             columns = ('ID', 'Вакансия', 'Зарплата', 'Отдел', 'Дата открытия', 'Дата закрытия')           
-            self.tables_data_view['columns'] = columns   
+            self.tables_data_view['columns'] = columns
             
             for i in columns:
-                self.tables_data_view.heading(f'#{1+columns.index(i)}', text=i)       
+                self.tables_data_view.heading(f'#{1+columns.index(i)}', text=i)
             self.tables_data_view.column("#1", width=40, stretch='NO')
             self.tables_data_view.column("#3", width=70, stretch='NO')
     
@@ -95,6 +103,8 @@ class Check_all_tables(tk.Tk):
                        
         elif self.tables_name_var.get() == "Сотрудники":
             #💀
+            self.tables_data_view.bind('<<TreeviewSelect>>', self.item_selected_employees)
+
             columns = ('ID', 'Вакансия', 'Отдел', 'Имя', 'Фамиля', 'Отчество', 'Логин', 'Пароль', 'Роль', 'Возраст', 'Дата_рождения',
                        'Отпуск', 'Пенсионер', 'Предпенсионер', 'Бездетный', 'Многодетный', 'Ветеран')           
             self.tables_data_view['columns'] = columns   
