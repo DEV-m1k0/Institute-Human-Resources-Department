@@ -82,7 +82,7 @@ class CreateDataBase:
 
             self.cursor.execute("""
                                 INSERT OR IGNORE INTO job_title (name, salary)
-                                VALUES ('Преродаватель', 30000);
+                                VALUES ('Учитель истории', 30000);
                                 """)
             
             self.cursor.execute("""
@@ -97,7 +97,7 @@ class CreateDataBase:
             
             self.cursor.execute("""
                                 INSERT OR IGNORE INTO job_title (name, salary)
-                                VALUES ('Администрация', 100000);
+                                VALUES ('Физрук', 100000);
                                 """)
 
             self.cursor.execute(

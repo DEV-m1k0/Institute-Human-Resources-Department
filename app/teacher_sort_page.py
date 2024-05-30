@@ -69,7 +69,7 @@ class TeacherAllNotes(tk.Tk):
                        FROM employees
                        inner join employees_and_positions on employees.id = employees_and_positions.id_employee  
                        inner join department on department.id = employees_and_positions.id_department
-                       where employees_and_positions.id_department = {self.department}         
+                       where employees_and_positions.id_department = {self.department} and employees.role = 'teacher'        
                        """
         self.cursor.execute(queue)
         
@@ -86,7 +86,7 @@ class TeacherAllNotes(tk.Tk):
                        FROM employees
                        inner join employees_and_positions on employees.id = employees_and_positions.id_employee  
                        inner join department on department.id = employees_and_positions.id_department
-                       where employees_and_positions.id_department = {self.department}       
+                       where employees_and_positions.id_department = {self.department} and employees.role = 'teacher'      
  
                        """
         else:  
@@ -95,7 +95,7 @@ class TeacherAllNotes(tk.Tk):
                        FROM employees
                        inner join employees_and_positions on employees.id = employees_and_positions.id_employee  
                        inner join department on department.id = employees_and_positions.id_department
-                       where employees_and_positions.id_department = {self.department}  and {self.sort_names[self.sort_var.get()]} = "да"    
+                       where employees_and_positions.id_department = {self.department}  and {self.sort_names[self.sort_var.get()]} = "да" and employees.role = 'teacher'   
                        """
         self.cursor.execute(queue)
         
