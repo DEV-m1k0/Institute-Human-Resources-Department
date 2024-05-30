@@ -1,6 +1,15 @@
 import sqlite3 as sq
 
 
+def get_cursor() -> sq.Cursor:
+    """
+    Получаем cursor для работы с нашей базой данных
+    """
+    connection = sq.connect("DataBase.db")
+    cursor = connection.cursor()
+
+    return cursor
+
 class CreateDataBase:
     """
     Этот класс предназначен для создания базы данных
@@ -13,17 +22,6 @@ class CreateDataBase:
 
         # Вызываем функцию, которая создает базу данных
         self.__create_db()
-
-    def get_cursor(self) -> sq.Cursor:
-        """
-        Получаем cursor для работы с нашей базой данных
-        """
-
-        self.__create_db()
-        connection = sq.connect("DataBase.db")
-        cursor = connection.cursor()
-
-        return cursor
 
     def __create_db(self) -> None:
         """
@@ -165,6 +163,15 @@ class CreateDataBase:
                                 
                                 """
             )
+
+            self.cursor.execute("""
+                                INSERT OR IGNORE INTO job_vacancy(id_job_title, id_department, vacancy_opening_date, vacancy_closing_date)
+                                VALUES (1, 1, "18.08.2023", NULL),
+                                       (2, 1, "07.01.2024", NULL),
+                                       (1, 2, "07.01.2024", "01.01.2025"),
+                                       (4, 2, "01.01.2024", NULL),
+                                       (3, 1, "05.03.2024", "01.01.2026");
+                                """)
 
             # Создаем таблицу с сотрудниками и их должностями
             self.cursor.execute(

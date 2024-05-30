@@ -1,5 +1,5 @@
 import tkinter as tk
-from create_DB import CreateDataBase
+from create_DB import get_cursor
 from tkinter import ttk
 
 
@@ -69,8 +69,7 @@ class Check_all_tables(tk.Tk):
         for i in self.tables_data_view.get_children():
             self.tables_data_view.delete(i)
           
-        self.db = CreateDataBase()
-        self.cursor = self.db.get_cursor()
+        self.cursor = get_cursor()
         
 
         self.sort_var.set('Выберите вид сортировки')

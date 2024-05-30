@@ -1,5 +1,5 @@
 import tkinter as tk
-from create_DB import CreateDataBase
+from create_DB import get_cursor
 
 department = ''
 class Login(tk.Tk):
@@ -22,8 +22,7 @@ class Login(tk.Tk):
         self.title("Login")
         self.resizable(height=False, width=False)
         
-        db = CreateDataBase()
-        self.cursor = db.get_cursor()
+        self.cursor = get_cursor()
 
         self.__add_widgets()
      

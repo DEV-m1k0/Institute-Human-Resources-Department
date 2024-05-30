@@ -1,6 +1,6 @@
 from tkinter import ttk, Tk
 import tkinter as tk
-from create_DB import CreateDataBase
+from create_DB import get_cursor
 from sqlite3 import Cursor
 
 class RegistrationUsers(Tk):
@@ -32,8 +32,7 @@ class RegistrationUsers(Tk):
 
     def __reg(self):
 
-        db = CreateDataBase()
-        cursor = db.get_cursor()
+        cursor = get_cursor()
 
         self.__insert_into_employees(cursor)
         self.__insert_into_empoyees_and_positions(cursor)

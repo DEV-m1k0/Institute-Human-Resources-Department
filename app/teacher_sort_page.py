@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from create_DB import CreateDataBase
+from create_DB import get_cursor
 
 
 class TeacherAllNotes(tk.Tk):
@@ -54,8 +54,7 @@ class TeacherAllNotes(tk.Tk):
         Функция для заполнения таблицы
         """
         
-        db = CreateDataBase()
-        self.cursor = db.get_cursor()
+        self.cursor = get_cursor()
         
         columns = ('ID', 'Имя', 'Фамилия', 'Отчество', 'Роль','Отдел','Дата рождения')           
         self.tables_data_view['columns'] = columns   

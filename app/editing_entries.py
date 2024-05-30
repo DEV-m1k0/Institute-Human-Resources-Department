@@ -1,6 +1,6 @@
 from tkinter import ttk
 import tkinter as tk
-from create_DB import CreateDataBase
+from create_DB import get_cursor
 from sqlite3 import Cursor
 
 class EditEntrie(tk.Toplevel):
@@ -93,8 +93,7 @@ class EditEntrie(tk.Toplevel):
         ttk.Button(self, text='Применить', command=self.__save_changes).pack(pady=20)
 
     def __save_changes(self):
-        db = CreateDataBase()
-        cursor = db.get_cursor()
+        cursor = get_cursor()
 
         self.__update_employees(cursor)
         self.__update_employees_and_positions(cursor)

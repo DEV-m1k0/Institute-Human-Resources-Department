@@ -25,13 +25,11 @@ class Admin_panel(tk.Tk):
         admin_panel_label = tk.Label(self, text='Панель Администратора', font=('Ariel', 28))
         see_all_btn = tk.Button(self, text="Просмотреть таблицы", font=("Arial", 14), command=self.__see_all)
         register_user_btn = tk.Button(self, text="Зарегистрировать пользователя", font=("Arial", 14), command=self.__register_user)
-        edit_users_data_btn = tk.Button(self, text="Отредактировать дынные пользователей", font=("Arial", 14), command=self.__edit_users_data)
         
         # Размещаем их
         admin_panel_label.pack(pady=25)
         see_all_btn.pack(pady=20)
         register_user_btn.pack(pady=20)
-        edit_users_data_btn.pack(pady=20)
     
     def __see_all(self):
         """
@@ -50,9 +48,3 @@ class Admin_panel(tk.Tk):
         RegistrationUsers()
         
         self.destroy()
-    
-    def __edit_users_data(self):
-        """
-        Функция для открытия окна для редактирования данных пользователей
-        """
-        print('tbd')

@@ -1,7 +1,6 @@
-from create_DB import CreateDataBase, sq
+from create_DB import get_cursor, sq
 
-db = CreateDataBase()
-cursor: sq.Cursor = db.get_cursor()
+cursor: sq.Cursor = get_cursor()
 
 def get_all_users() -> list[tuple]:
     cursor.execute("""
@@ -32,8 +31,7 @@ def sorting_users_by_status_pre_retirment(sort_by: str, notes: list[tuple] = Non
     return accepted_users
 
 def get_notes_for_department() -> list[str]:
-    db = CreateDataBase()
-    cursor = db.get_cursor()
+    cursor = get_cursor()
 
     cursor.execute("""
                     SELECT * FROM department;
@@ -47,8 +45,7 @@ def get_notes_for_department() -> list[str]:
     return departmens
 
 def get_notes_for_job_title() -> list[str]:
-    db = CreateDataBase()
-    cursor = db.get_cursor()
+    cursor = get_cursor()
 
     cursor.execute("""
                     SELECT * FROM job_title;
