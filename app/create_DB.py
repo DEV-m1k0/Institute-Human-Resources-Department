@@ -80,26 +80,6 @@ class CreateDataBase:
                                 """
             )
 
-            self.cursor.execute("""
-                                INSERT OR IGNORE INTO job_title (name, salary)
-                                VALUES ('Учитель истории', 30000);
-                                """)
-            
-            self.cursor.execute("""
-                                INSERT OR IGNORE INTO job_title (name, salary)
-                                VALUES ('Уборщик', 20000);
-                                """)
-            
-            self.cursor.execute("""
-                                INSERT OR IGNORE INTO job_title (name, salary)
-                                VALUES ('Системный администратор', 30000);
-                                """)
-            
-            self.cursor.execute("""
-                                INSERT OR IGNORE INTO job_title (name, salary)
-                                VALUES ('Физрук', 100000);
-                                """)
-
             self.cursor.execute(
                 """
 
