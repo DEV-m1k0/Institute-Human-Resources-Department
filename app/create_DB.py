@@ -10,6 +10,7 @@ def get_cursor() -> sq.Cursor:
 
     return cursor
 
+
 class CreateDataBase:
     """
     Этот класс предназначен для создания базы данных
@@ -82,6 +83,34 @@ class CreateDataBase:
 
             self.cursor.execute(
                 """
+                                INSERT OR IGNORE INTO job_title (name, salary)
+                                VALUES ('Учитель истории', 30000);
+                                """
+            )
+
+            self.cursor.execute(
+                """
+                                INSERT OR IGNORE INTO job_title (name, salary)
+                                VALUES ('Уборщик', 20000);
+                                """
+            )
+
+            self.cursor.execute(
+                """
+                                INSERT OR IGNORE INTO job_title (name, salary)
+                                VALUES ('Системный администратор', 30000);
+                                """
+            )
+
+            self.cursor.execute(
+                """
+                                INSERT OR IGNORE INTO job_title (name, salary)
+                                VALUES ('Физрук', 100000);
+                                """
+            )
+
+            self.cursor.execute(
+                """
 
                                 CREATE TABLE IF NOT EXISTS department(
                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -91,15 +120,19 @@ class CreateDataBase:
                                 """
             )
 
-            self.cursor.execute("""
+            self.cursor.execute(
+                """
                                 INSERT OR IGNORE INTO department (name)
                                 VALUES ('гумунитарный');
-                                """)
-            
-            self.cursor.execute("""
+                                """
+            )
+
+            self.cursor.execute(
+                """
                                 INSERT OR IGNORE INTO department (name)
                                 VALUES ('технический');
-                                """)
+                                """
+            )
 
             # Создаем таблицу с сотрудниками
             self.cursor.execute(
@@ -144,13 +177,15 @@ class CreateDataBase:
                                 """
             )
 
-            self.cursor.execute("""
+            self.cursor.execute(
+                """
                                 INSERT OR IGNORE INTO job_vacancy(id_job_title, id_department, vacancy_opening_date, vacancy_closing_date)
                                 VALUES (2, 1, "07.01.2024", NULL),
                                        (1, 2, "07.01.2024", "01.01.2025"),
                                        (4, 2, "01.01.2024", NULL),
                                        (3, 1, "05.03.2024", "01.01.2026");
-                                """)
+                                """
+            )
 
             # Создаем таблицу с сотрудниками и их должностями
             self.cursor.execute(
