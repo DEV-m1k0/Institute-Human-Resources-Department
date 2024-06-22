@@ -1,13 +1,13 @@
-import tkinter as tk
+from typing import Tuple
 from check_tables import Check_all_tables
+import customtkinter as ctk
 
-
-class Admin_panel(tk.Tk):
+class Admin_panel(ctk.CTk):
     """
     Класс панели админа для выбора действий
     """
-    def __init__(self, screenName: str | None = None, baseName: str | None = None, className: str = "Tk", useTk: bool = True, sync: bool = False, use: str | None = None) -> None:
-        super().__init__(screenName, baseName, className, useTk, sync, use)
+    def __init__(self, fg_color: str | Tuple[str, str] | None = None, **kwargs):
+        super().__init__(fg_color, **kwargs)
         
         self.geometry("450x350")
         self.title("Admin panel")
@@ -22,10 +22,10 @@ class Admin_panel(tk.Tk):
         Функция для добавления виджетов на экран
         """
         # Создаем виджеты
-        admin_panel_label = tk.Label(self, text='Панель Администратора', font=('Ariel', 28))
-        see_all_btn = tk.Button(self, text="Просмотреть таблицы", font=("Arial", 14), command=self.__see_all)
-        register_user_btn = tk.Button(self, text="Зарегистрировать пользователя", font=("Arial", 14), command=self.__register_user)
-        add_vacancy_btn = tk.Button(self, text="Добавить вакансию", font=("Arial", 14), command=self.__add_vacancy)
+        admin_panel_label = ctk.CTkLabel(self, text='Панель Администратора', font=('Ariel', 28))
+        see_all_btn = ctk.CTkButton(self, text="Просмотреть таблицы", font=("Arial", 14), command=self.__see_all)
+        register_user_btn = ctk.CTkButton(self, text="Зарегистрировать пользователя", font=("Arial", 14), command=self.__register_user)
+        add_vacancy_btn = ctk.CTkButton(self, text="Добавить вакансию", font=("Arial", 14), command=self.__add_vacancy)
         
         # Размещаем их
         admin_panel_label.pack(pady=25)
@@ -47,9 +47,9 @@ class Admin_panel(tk.Tk):
         Функция для открытия окна для регистрации новых пользователей
         """
         from reg_user import RegistrationUsers
-        RegistrationUsers()
-        
         self.destroy()
+        RegistrationUsers()
+
     
     def __add_vacancy(self):
         from add_vacancy import AddVacancy

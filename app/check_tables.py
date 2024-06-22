@@ -1,14 +1,15 @@
 import tkinter as tk
+from typing import Tuple
 from create_DB import get_cursor
 from tkinter import ttk
+import customtkinter as ctk
 
-
-class Check_all_tables(tk.Tk):
+class Check_all_tables(ctk.CTk):
     """
     Класс для просмотра всех записей
     """
-    def __init__(self, screenName: str | None = None, baseName: str | None = None, className: str = "Tk", useTk: bool = True, sync: bool = False, use: str | None = None) -> None:
-        super().__init__(screenName, baseName, className, useTk, sync, use)
+    def __init__(self, fg_color: str | Tuple[str, str] | None = None, **kwargs):
+        super().__init__(fg_color, **kwargs)
         
         self.geometry("1280x400")
         self.title("Tables")
@@ -46,20 +47,22 @@ class Check_all_tables(tk.Tk):
         """
         
         # Создаем виджеты
-        tables_label = tk.Label(self, text='Просмотр всех записей', font=('Ariel', 28))
+        tables_label = ctk.CTkLabel(self, text='Просмотр всех записей', font=('Ariel', 28))
         
         self.tables_name_var = tk.StringVar(self)
         self.sort_var = tk.StringVar(self)
         self.tables_name_var.trace('w', self.__choose)
         self.sort_var.trace('w', self.__sort)
-        self.tables_name_optionmenu =  ttk.OptionMenu(self, self.tables_name_var, 'Выберите таблицу', *('Вакансии','Сотрудники'))
+        self.tables_name_optionmenu =  ctk.CTkOptionMenu(self,values=['Вакансии','Сотрудники'], variable=self.tables_name_var)
+        self.tables_name_var.set('Выберите таблицу')
         
         self.tables_data_view = ttk.Treeview(self, show='headings')
         
-        self.sort_optionmenu = ttk.OptionMenu(self, self.sort_var, 'Выберите вид сортировки', *self.sort_names)
-        self.sort_optionmenu['state'] = 'disabled'
+        self.sort_optionmenu = ctk.CTkOptionMenu(self, variable=self.sort_var, values=list(self.sort_names))
+        self.sort_var.set('Выберите вид сортировки')
+        self.sort_optionmenu.configure(state='disabled')
         
-        back_btn = tk.Button(self, text='К панели администратора', command=self.__back_to_panel, height=2)
+        back_btn = ctk.CTkButton(self, text='К панели администратора', command=self.__back_to_panel)
  
         # Размещаем их
         tables_label.pack()
@@ -93,7 +96,7 @@ class Check_all_tables(tk.Tk):
             self.tables_data_view.column("#1", width=40, stretch='NO')
             self.tables_data_view.column("#3", width=70, stretch='NO')
     
-            self.sort_optionmenu['state'] = 'disabled'
+            self.sort_optionmenu.configure(state='disabled')
             
             queue = """
                        SELECT job_vacancy.id, job_title.name, job_title.salary, department.name, vacancy_opening_date, vacancy_closing_date FROM job_vacancy
@@ -116,7 +119,7 @@ class Check_all_tables(tk.Tk):
 
 
                 
-            self.sort_optionmenu['state'] = 'enabled'
+            self.sort_optionmenu.configure(state='enabled')
             
             queue = """
                        SELECT employees_and_positions.id, job_title.name,department.name, employees.name, employees.second_name, employees.surname,
@@ -129,7 +132,7 @@ class Check_all_tables(tk.Tk):
                        inner join employees on employees_and_positions.id_employee = employees.id
 
                        """
-            self.sort_optionmenu['state'] = 'enabled'
+            
         self.cursor.execute(queue)
         
         for el in self.cursor.fetchall():
@@ -186,3 +189,4 @@ class Check_all_tables(tk.Tk):
         
         from admin_panel import Admin_panel
         Admin_panel()
+    

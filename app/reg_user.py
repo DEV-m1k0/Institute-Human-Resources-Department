@@ -16,6 +16,7 @@ class RegistrationUsers(ctk.CTk):
         self.title("Registration")
 
         self.__add_widgets()
+        self.mainloop()
 
     def __add_widgets(self):
         """
@@ -244,3 +245,4 @@ class RegistrationUsers(ctk.CTk):
 
         self.entry_password: ttk.Entry = ttk.Entry(frame)
         self.entry_password.grid(row=15, column=1)
+
