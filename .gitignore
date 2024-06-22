@@ -1,3 +1,6 @@
 DataBase.db
 __init__.py
 __pycache__
+.venv
+.DS_Store
+.git
