@@ -1,5 +1,5 @@
 from typing import Tuple, Optional, Union
-from tkinter import ttk, Tk
+from tkinter import ttk
 import customtkinter as ctk
 import tkinter as tk
 from create_DB import get_cursor
@@ -245,4 +245,3 @@ class RegistrationUsers(ctk.CTk):
 
         self.entry_password: ttk.Entry = ttk.Entry(frame)
         self.entry_password.grid(row=15, column=1)
-
