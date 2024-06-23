@@ -38,6 +38,7 @@ class Admin_panel(ctk.CTk):
         Функция для открытия окна для просмотра всех записей
         """
         self.destroy()
+        
         Check_all_tables()
 
         
@@ -47,7 +48,8 @@ class Admin_panel(ctk.CTk):
         Функция для открытия окна для регистрации новых пользователей
         """
         from reg_user import RegistrationUsers
-        self.destroy()
+        
+        self.destroy()  
         RegistrationUsers()
 
     

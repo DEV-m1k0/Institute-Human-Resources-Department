@@ -1,20 +1,20 @@
-from tkinter import Tk
-from tkinter.ttk import *
+from typing import Tuple
+import customtkinter as ctk
 from staff_sort_page import StaffAllNotes
 
 
-class StaffPanel(Tk):
+class StaffPanel(ctk.CTk):
     """
     Панель персонала
     """
 
-    def __init__(self, department, screenName: str | None = None, baseName: str | None = None, className: str = "Tk", useTk: bool = True, sync: bool = False, use: str | None = None) -> None:
-        super().__init__(screenName, baseName, className, useTk, sync, use)
+    def __init__(self, fg_color: str | Tuple[str] | None = None, **kwargs):
+        super().__init__(fg_color, **kwargs)
 
         self.geometry('450x350')
         self.title('Staff\'s panel')
         self.resizable(height=False, width=False)
-        self.department = department
+
         
         self.__add_widgets()
 
@@ -25,10 +25,10 @@ class StaffPanel(Tk):
         Добавление и размещение виджетов
         """
         
-        main_label = Label(self, text='Панель персонала', font='Arial 28')
+        main_label = ctk.CTkLabel(self, text='Панель персонала', font=("Arial", 28))
         main_label.pack()
 
-        button_all_notes = Button(self, text='Просмотреть записи', command=self.__redirect_to_all_notes)
+        button_all_notes = ctk.CTkButton(self, text='Просмотреть записи', command=self.__redirect_to_all_notes)
         button_all_notes.pack()
 
 
@@ -38,7 +38,7 @@ class StaffPanel(Tk):
         """
         
         self.destroy()
-        StaffAllNotes(self.department)
+        StaffAllNotes()
         
 
 

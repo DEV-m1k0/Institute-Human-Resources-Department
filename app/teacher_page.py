@@ -1,21 +1,21 @@
-from tkinter import Tk
-from tkinter.ttk import *
+from typing import Tuple
+import customtkinter as ctk
 from teacher_sort_page import TeacherAllNotes
 
 
-class TeacherPanel(Tk):
+class TeacherPanel(ctk.CTk):
     """
     Панель преподавателя
     """
 
-    def __init__(self, department, screenName: str | None = None, baseName: str | None = None, className: str = "Tk", useTk: bool = True, sync: bool = False, use: str | None = None) -> None:
-        super().__init__(screenName, baseName, className, useTk, sync, use)
+    def __init__(self, fg_color: str | Tuple[str, str] | None = None, **kwargs):
+        super().__init__(fg_color, **kwargs)
 
         self.geometry('450x350')
         self.title('Teacher\'s panel')
         self.resizable(height=False, width=False)
         
-        self.department = department
+
         self.__add_widgets()
 
         self.mainloop()
@@ -25,8 +25,8 @@ class TeacherPanel(Tk):
         Добавление и размещение виджетов
         """
         # Создаем виджеты
-        main_label = Label(self, text='Панель преподавателя', font='Arial 28')
-        button_all_notes = Button(self, text='Просмотреть записи', command=self.__redirect_to_all_notes)
+        main_label = ctk.CTkLabel(self, text='Панель преподавателя', font=('Arial', 28))
+        button_all_notes = ctk.CTkButton(self, text='Просмотреть записи', command=self.__redirect_to_all_notes)
         
         # Размещаем их
         main_label.pack()
@@ -39,5 +39,5 @@ class TeacherPanel(Tk):
         """
 
         self.destroy()
-        TeacherAllNotes(self.department)
+        TeacherAllNotes()
     

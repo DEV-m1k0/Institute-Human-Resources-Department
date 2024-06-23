@@ -1,9 +1,10 @@
+from typing import Tuple
+import customtkinter as ctk
+from create_DB import get_cursor
 import tkinter as tk
 from tkinter import ttk
-from create_DB import get_cursor
 
-
-class StaffAllNotes(tk.Tk):
+class StaffAllNotes(ctk.CTk):
     """
     Страница с записями\n
     \nВозможности сортировки:
@@ -14,14 +15,13 @@ class StaffAllNotes(tk.Tk):
     5) Ветераны
 """
 
-    def __init__(self, department, screenName: str | None = None, baseName: str | None = None, className: str = "Tk", useTk: bool = True, sync: bool = False, use: str | None = None) -> None:
-        super().__init__(screenName, baseName, className, useTk, sync, use)
+    def __init__(self, fg_color: str | Tuple[str, str] | None = None, **kwargs):
+        super().__init__(fg_color, **kwargs)
 
         self.geometry("650x300")
         self.title('Notes')
         self.resizable(height=False, width=False)
-        
-        self.department = department       
+            
         
         self.sort_names = {"Все" : "Все", 'В отпуске' : 'status_vacation', 'Пенсионер':'status_retirement', 'Предпенсионного возраста':'status_pre_retirement', 'Бездетный':'status_childless',
                            'Многодетный':'status_many_children', 'Ветеран':'status_veteran'}
@@ -43,8 +43,9 @@ class StaffAllNotes(tk.Tk):
         # Создаем виджеты
         self.sort_var = tk.StringVar(self)
         self.sort_var.trace('w', self.__sort)
-        self.sort_optionmenu =  ttk.OptionMenu(self, self.sort_var, 'Выбирите сортировку', *self.sort_names)
-        back_button = tk.Button(self, text='К панели персонала', command=self.__back_to_panel)
+        self.sort_optionmenu =  ctk.CTkOptionMenu(self, variable=self.sort_var, values=list(self.sort_names))
+        self.sort_optionmenu.set('Выбирите сортировку')
+        back_button = ctk.CTkButton(self, text='К панели персонала', command=self.__back_to_panel)
         self.tables_data_view = ttk.Treeview(self, show='headings')
 
         # Размещаем их
@@ -74,7 +75,7 @@ class StaffAllNotes(tk.Tk):
                        FROM employees
                        inner join employees_and_positions on employees.id = employees_and_positions.id_employee  
                        inner join department on department.id = employees_and_positions.id_department
-                       where employees_and_positions.id_department = {self.department}  and employees.role = 'staff'    
+                       where employees.role = 'staff'    
                        """
         self.cursor.execute(queue)
         
@@ -91,7 +92,7 @@ class StaffAllNotes(tk.Tk):
                        FROM employees
                        inner join employees_and_positions on employees.id = employees_and_positions.id_employee  
                        inner join department on department.id = employees_and_positions.id_department
-                       where employees_and_positions.id_department = {self.department} and employees.role = 'staff'       
+                       where employees.role = 'staff'       
  
                        """
         else:  
@@ -100,7 +101,7 @@ class StaffAllNotes(tk.Tk):
                        FROM employees
                        inner join employees_and_positions on employees.id = employees_and_positions.id_employee  
                        inner join department on department.id = employees_and_positions.id_department
-                       where employees_and_positions.id_department = {self.department}  and {self.sort_names[self.sort_var.get()]} = "да"  and employees.role = 'staff'   
+                       where {self.sort_names[self.sort_var.get()]} = "да"  and employees.role = 'staff'   
                        """
         self.cursor.execute(queue)
         
@@ -117,5 +118,5 @@ class StaffAllNotes(tk.Tk):
         self.destroy()
         
         from staff_page import StaffPanel
-        StaffPanel(self.department)
+        StaffPanel()
 

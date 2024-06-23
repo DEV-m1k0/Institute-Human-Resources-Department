@@ -35,12 +35,12 @@ class MainApp:
         elif role == 'teacher':
             # Перенаправить на страницу с ролью teacher
             self.login.destroy()
-            TeacherPanel(*self.department)
+            TeacherPanel()
 
         elif role == 'staff':
             # Перенаправить на страницу с ролью staff
             self.login.destroy()
-            StaffPanel(*self.department)
+            StaffPanel()
 
 
 

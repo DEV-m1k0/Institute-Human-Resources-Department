@@ -1,9 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
+from typing import Tuple
+import customtkinter as ctk
 from create_DB import get_cursor
 
 
-class TeacherAllNotes(tk.Tk):
+class TeacherAllNotes(ctk.CTk):
     """
     Страница с записями\n
     \nВозможности сортировки:
@@ -13,10 +15,10 @@ class TeacherAllNotes(tk.Tk):
     4) Многодетные сотрудники\n
     5) Ветераны
 """
-    def __init__(self, department, screenName: str | None = None, baseName: str | None = None, className: str = "Tk", useTk: bool = True, sync: bool = False, use: str | None = None) -> None:
-        super().__init__(screenName, baseName, className, useTk, sync, use)
+    def __init__(self, fg_color: str | Tuple[str, str] | None = None, **kwargs):
+        super().__init__(fg_color, **kwargs)
 
-        self.department = department
+
         self.geometry("650x300")
         self.title('Notes')
         self.resizable(height=False, width=False)
@@ -38,8 +40,9 @@ class TeacherAllNotes(tk.Tk):
         # Создаем виджеты
         self.sort_var = tk.StringVar(self)
         self.sort_var.trace('w', self.__sort)
-        self.sort_optionmenu =  ttk.OptionMenu(self, self.sort_var, 'Выбирите сортировку', *self.sort_names)
-        back_button = tk.Button(self, text='К панели преподавателя', command=self.__back_to_panel)
+        self.sort_optionmenu =  ctk.CTkOptionMenu(self, variable=self.sort_var, values=list(self.sort_names))
+        self.sort_optionmenu.set('Выбирите сортировку')
+        back_button = ctk.CTkButton(self, text='К панели преподавателя', command=self.__back_to_panel)
         self.tables_data_view = ttk.Treeview(self, show='headings')
 
         # Размещаем их
@@ -69,7 +72,7 @@ class TeacherAllNotes(tk.Tk):
                        FROM employees
                        inner join employees_and_positions on employees.id = employees_and_positions.id_employee  
                        inner join department on department.id = employees_and_positions.id_department
-                       where employees_and_positions.id_department = {self.department} and employees.role = 'teacher'        
+                       where employees.role = 'teacher'        
                        """
         self.cursor.execute(queue)
         
@@ -86,7 +89,7 @@ class TeacherAllNotes(tk.Tk):
                        FROM employees
                        inner join employees_and_positions on employees.id = employees_and_positions.id_employee  
                        inner join department on department.id = employees_and_positions.id_department
-                       where employees_and_positions.id_department = {self.department} and employees.role = 'teacher'      
+                       where employees.role = 'teacher'      
  
                        """
         else:  
@@ -95,7 +98,7 @@ class TeacherAllNotes(tk.Tk):
                        FROM employees
                        inner join employees_and_positions on employees.id = employees_and_positions.id_employee  
                        inner join department on department.id = employees_and_positions.id_department
-                       where employees_and_positions.id_department = {self.department}  and {self.sort_names[self.sort_var.get()]} = "да" and employees.role = 'teacher'   
+                       where {self.sort_names[self.sort_var.get()]} = "да" and employees.role = 'teacher'   
                        """
         self.cursor.execute(queue)
         
@@ -112,4 +115,4 @@ class TeacherAllNotes(tk.Tk):
         self.destroy()
         
         from teacher_page import TeacherPanel
-        TeacherPanel(self.department)
+        TeacherPanel()
