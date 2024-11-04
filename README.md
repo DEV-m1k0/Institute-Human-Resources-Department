@@ -1,2 +1,2 @@
 # Institute-Human-Resources-Department
-This is app on TKinter which directed to keeping recorder Institute Human Resources Department
+Данное приложение написано для студентов второго курса, которые проходят практику в конце второго семестра!
